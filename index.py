@@ -1,5 +1,5 @@
 from werkzeug.utils import secure_filename
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 import os
 from module import transform
 app = Flask(__name__, static_url_path='/static')
@@ -11,19 +11,21 @@ def startProcess():
     try:
         src = request.files['source']
         trg = request.files['target']
-        src.save(os.path.join(app.instance_path,
-                              'uploads', secure_filename(src.filename)))
-        trg.save(os.path.join(app.instance_path,
-                              'uploads', secure_filename(trg.filename)))
         params = []
         params.append(request.args.get("x"))
         params.append(request.args.get("y"))
         params.append(request.args.get("z"))
+
+        src.save(os.path.join(app.instance_path,
+                              'uploads', secure_filename(src.filename)))
+        trg.save(os.path.join(app.instance_path,
+                              'uploads', secure_filename(trg.filename)))
+                              
         morph = transform.ManipulateSelfie(src.filename, trg.filename, params)
-        morph.apply_transformation()
-        return "OK", 200
+        timage = morph.apply_transformation()
+        return send_file(timage, mimetype='image/jpg')
     except:
-        return ("Some error occurred while trying to fetch data")
+        return ("Some error occurred while trying to process")
 
 
 @app.route("/", methods=['GET'])

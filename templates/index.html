@@ -62,21 +62,12 @@
                         </div>
                         <div class="flex-grow pl-4">
                             <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">THEN</h2>
-                            <p class="leading-relaxed">Write that .obj file contents in an array. Make a JSON object
-                                with 3 params i.e. 1)image array you formed earlier, 2)target image array, 3)array of 3
-                                params [distance from camera int, degree of eye left/right int, degree of head up/down
-                                int]<br>
-                                <code>
-                                    {<br>
-                                        "source":"[v 1 1 5 0.4 0.3 0.2
-                                        ......
-                                        f 0 2 1]", <br>
-                                        "target": "[0.5 0.1 0.04
-                                        ......
-                                        0.8 0.11 0.01]", <br>
-                                        "params":"[300 50 0]"<br>
-                                    }
-                                </code>
+                            <p class="leading-relaxed">
+                                Include these two input images in file/form-data of request:
+                                <ol>
+                                    <li><b>1)</b> .obj face 3d mesh you obtained earlier using PRNet or VRN</li>
+                                    <li><b>2)</b> target image.jpg</li>
+                                </ol>
                             </p>
                         </div>
                     </div>
@@ -91,9 +82,10 @@
                         </div>
                         <div class="flex-grow pl-4">
                             <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">FINISH</h2>
-                            <p class="leading-relaxed">Make an async post request to transform-homo.heroku.com/ with the
-                                JSON
-                                object you formed earlier. You will be returned an array of transformed image.</p>
+                            <p class="leading-relaxed">Make a post request with 3 transformation params in url params
+                                like this:
+                                <b>http://transform-app.heroku.com/?x=-50&y=0&z=250</b>. You will be returned a
+                                transformed image.</p>
                         </div>
                     </div>
                 </div>

@@ -11,14 +11,15 @@ from skimage import io
 
 from .library import mesh_numpy
 
-sys.path.append("Face-Swap/")
-
 
 class ManipulateSelfie:
 
     def __init__(self, source, target, params):
         self.save_folder = os.path.abspath(os.path.join(
             '..', os.getcwd()))+"/instance/uploads/"
+
+        self.name = os.path.splitext(target)[0]
+        print(self.name)
         self.source = self.save_folder+source
         self.target = self.save_folder+target
         self.params = params
@@ -74,7 +75,6 @@ class ManipulateSelfie:
                                                                           far=self.camera['far'])
             image_vertices = mesh_numpy.transform.to_image(
                 projected_vertices, h, w, True)
-
         rendering = mesh_numpy.render.render_colors(
             image_vertices, self.triangles, self.colors, h, w)
         rendering = np.minimum((np.maximum(rendering, 0)), 1)
@@ -86,11 +86,10 @@ class ManipulateSelfie:
                               self.params[2]]  # x,y,z
         image = self.transfrom()
 
-        print(self.camera)
-        print(image[10])
-        tname = self.target + "-t.jpg"
-        cv2.imwrite(tname, image)
-        morph = Morph(tname, self.target)
+        tname = self.save_folder+self.name+"-t.jpg"
+        io.imsave(tname, image)
+
+        morph = Morph(tname, self.target, self.source)
         return morph.apply_homo()
 
     def load_mesh(self):
@@ -105,9 +104,10 @@ class ManipulateSelfie:
 
 class Morph:
 
-    def __init__(self, source, target):
+    def __init__(self, source, target, objfile):
         self.source = source
         self.target = target
+        self.objfile = objfile
 
     def apply_homo(self):
         trgOld = cv2.imread(
@@ -185,7 +185,11 @@ class Morph:
             corners = cv2.perspectiveTransform(np.array([corners]), T)[0]
             H = cv2.findHomography(corners, edges)
             output = cv2.warpPerspective(temp, H[0], trg.shape[:2])
-            return output
+            os.remove(self.source)
+            os.remove(self.target)
+            os.remove(self.objfile)
+            cv2.imwrite(self.source, output)
+            return self.source
         except:
             print("error")
             return -1

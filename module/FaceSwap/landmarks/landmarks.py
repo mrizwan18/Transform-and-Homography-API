@@ -1,10 +1,12 @@
 import dlib
-
+import os
 
 # code from https://github.com/codeniko/shape_predictor_81_face_landmarks.git
 # with some changes
 
-def get_landmarks(frame, predictor_path='Face-Swap/landmarks/shape_predictor_81_face_landmarks.dat'):
+
+def get_landmarks(frame, predictor_path=os.path.abspath(os.path.join(
+        '..', os.getcwd()))+'\module\FaceSwap\landmarks\shape_predictor_81_face_landmarks.dat'):
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor(predictor_path)
 
