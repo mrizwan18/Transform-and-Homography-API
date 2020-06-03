@@ -2,7 +2,7 @@
   "name": "fyp-morph-api",
   "version": "1.0.0",
   "description": "API to process 3d image and return warped image back",
-  "main": "index.js",
+  "main": "index.py",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
