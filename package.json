@@ -1,0 +1,26 @@
+{
+  "name": "fyp-morph-api",
+  "version": "1.0.0",
+  "description": "API to process 3d image and return warped image back",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrizwan18/Transform-and-Homography-API.git"
+  },
+  "keywords": [
+    "Homography",
+    "Face",
+    "Transform",
+    "Selfie",
+    "Manipulation"
+  ],
+  "author": "Rizwan, Ahmed Zubair",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrizwan18/Transform-and-Homography-API/issues"
+  },
+  "homepage": "https://github.com/mrizwan18/Transform-and-Homography-API#readme"
+}
