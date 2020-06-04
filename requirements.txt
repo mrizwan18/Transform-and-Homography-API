@@ -25,4 +25,3 @@ tifffile==2020.5.30
 toml==0.10.1
 Werkzeug==1.0.1
 gunicorn==20.0.4
-cmake
