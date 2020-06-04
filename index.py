@@ -35,7 +35,7 @@ def index():
     try:
         return render_template('index.html')
     except:
-        return ("Some error occurred while trying to fetch data")
+        return ("Some error occurred while trying to process")
 
 
 @app.route("/examples", methods=['GET'])
