@@ -2,7 +2,6 @@ autopep8==1.5.3
 click==7.1.2
 cycler==0.10.0
 decorator==4.4.2
-dlib==19.19.0
 Flask==1.1.2
 imageio==2.8.0
 itsdangerous==1.1.0
