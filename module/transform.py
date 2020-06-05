@@ -1,11 +1,13 @@
 import os
 import sys
+
 import cv2
 import dlib
 import numpy as np
 import pywavefront
 from PIL import Image
 from skimage import io
+
 from module import mesh_numpy
 
 
@@ -13,18 +15,18 @@ class ManipulateSelfie:
 
     def __init__(self, source, target, params):
         self.save_folder = os.path.abspath(os.path.join(
-            '..', os.getcwd()))+"/instance/uploads/"
+            '..', os.getcwd())) + "/instance/uploads/"
 
         self.name = os.path.splitext(target)[0]
-        self.source = self.save_folder+source
-        self.target = self.save_folder+target
+        self.source = self.save_folder + source
+        self.target = self.save_folder + target
         self.params = params
         self.vertices, self.colors, self.triangles = self.load_mesh()
 
         self.colors = self.colors / np.max(self.colors)
         # move center of the image to [0,0,0]
         self.vertices = self.vertices - \
-            np.mean(self.vertices, 0)[np.newaxis, :]
+                        np.mean(self.vertices, 0)[np.newaxis, :]
 
         self.obj, self.camera = self.initialize_model(self.vertices)
 
@@ -82,7 +84,7 @@ class ManipulateSelfie:
                               self.params[2]]  # x,y,z
         image = self.transfrom()
 
-        tname = self.save_folder+self.name+"-t.jpg"
+        tname = self.save_folder + self.name + "-t.jpg"
         io.imsave(tname, image)
 
         morph = Morph(tname, self.target, self.source)
@@ -193,7 +195,7 @@ class Morph:
             src3 = np.where(src2 > 0, 255, 0)
             src4 = ((src3 / 255) * 0) + ((1 - (src3 / 255)) * 255)
             mask = ((src4[..., None] / 255) * 0) + \
-                ((1 - (src4[..., None] / 255)) * mask)
+                   ((1 - (src4[..., None] / 255)) * mask)
             mask = mask.astype(np.uint8)
 
             # Clone seamlessly.
