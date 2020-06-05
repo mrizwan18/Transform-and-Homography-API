@@ -1,11 +1,11 @@
 import os
 import sys
 import cv2
+import dlib
 import numpy as np
 import pywavefront
 from PIL import Image
 from skimage import io
-from module.landmarks import get_landmarks
 from module import mesh_numpy
 
 
@@ -96,6 +96,28 @@ class ManipulateSelfie:
         vertices = data[:, 0:3]
         colors = data[:, 3:]
         return vertices, colors, triangles
+
+
+def get_landmarks(frame, predictor_path='module/shape_predictor_81_face_landmarks.dat'):
+    detector = dlib.get_frontal_face_detector()
+    predictor = dlib.shape_predictor(predictor_path)
+
+    dets = detector(frame, 0)
+    for k, d in enumerate(dets):
+        shape = predictor(frame, d)
+        landmarks = []
+
+        '''
+        # for all points
+        #landmarks = [(p.x, p.y) for p in shape.parts()]
+        '''
+
+        # for boundary points
+        for num in range(shape.num_parts):
+            if (0 <= num <= 16) or (num >= 68):  # Face boundary points
+                landmarks.append((shape.parts()[num].x, shape.parts()[num].y))
+
+    return landmarks
 
 
 class Morph:
