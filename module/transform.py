@@ -1,15 +1,12 @@
-from .FaceSwap.landmarks.landmarks import get_landmarks
-import glob
 import os
 import sys
-import json
 import cv2
 import numpy as np
 import pywavefront
 from PIL import Image
 from skimage import io
-
-from .library import mesh_numpy
+from module.landmarks import get_landmarks
+from module import mesh_numpy
 
 
 class ManipulateSelfie:
@@ -19,7 +16,6 @@ class ManipulateSelfie:
             '..', os.getcwd()))+"/instance/uploads/"
 
         self.name = os.path.splitext(target)[0]
-        print(self.name)
         self.source = self.save_folder+source
         self.target = self.save_folder+target
         self.params = params
