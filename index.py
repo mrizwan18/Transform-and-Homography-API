@@ -1,9 +1,9 @@
+from module import transform
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, send_file
 import os
 import sys
 sys.path.append("fyp-morph-api/")
-from module import transform
 app = Flask(__name__, static_url_path='/static')
 os.makedirs(os.path.join(app.instance_path, 'uploads'), exist_ok=True)
 
