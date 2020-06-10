@@ -206,7 +206,7 @@ class Morph:
             H = cv2.findHomography(corners, edges)
             output = cv2.warpPerspective(temp, H[0], trg.shape[:2])
             os.remove(self.source)
-            os.remove(self.target)
+            # os.remove(self.target)
             os.remove(self.objfile)
             cv2.imwrite(self.source, output)
             return self.source
