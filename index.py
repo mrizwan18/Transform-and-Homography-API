@@ -1,5 +1,6 @@
 import os
 
+from PIL import Image
 from flask import Flask, render_template, request, send_file
 from werkzeug.utils import secure_filename
 
@@ -23,8 +24,13 @@ def startProcess():
 
     src.save(os.path.join(app.instance_path,
                           'uploads', secure_filename(src.filename)))
-    trg.save(os.path.join(app.instance_path,
-                          'uploads', secure_filename(trg.filename)))
+    tpath = os.path.join(app.instance_path,
+                         'uploads', secure_filename(trg.filename))
+    trg.save(tpath)
+
+    image = Image.open(tpath)
+    image.thumbnail((500, 500))
+    image.save(tpath)
     try:
         morph = transform.ManipulateSelfie(src.filename, trg.filename, params)
         response = morph.apply_transformation()
